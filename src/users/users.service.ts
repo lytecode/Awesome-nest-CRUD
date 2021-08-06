@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -21,8 +21,15 @@ export class UsersService {
     return this.users.find((user) => user.id === id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(id: number, updateUserDto: UpdateUserDto): User {
+    const user = this.users.find((user) => user.id === id);
+    if (user) {
+      const updatedUser = { ...user, ...updateUserDto };
+      this.users.splice(id, 1);
+      this.users.push(updatedUser);
+      return updatedUser;
+    }
+    throw new NotFoundException('User with id not found');
   }
 
   remove(id: number): { msg: string } {
