@@ -26,7 +26,13 @@ export class UsersService {
   }
 
   findOne(id: number): User {
-    return this.users.find((user) => user.id === id);
+    const user = this.users.find((user) => user.id === id);
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto): User {

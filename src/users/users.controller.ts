@@ -14,6 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import {
   ApiCreatedResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiQuery,
   ApiTags,
@@ -38,6 +39,7 @@ export class UsersController {
   }
 
   @ApiOkResponse({ type: User })
+  @ApiNotFoundResponse()
   @Get(':id')
   findOne(@Param('id') id: number): User {
     return this.usersService.findOne(+id);
