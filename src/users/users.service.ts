@@ -5,7 +5,12 @@ import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = []; //[{ id: 1, name: 'June' }];
+  private users: User[] = [
+    { id: 0, name: 'June' },
+    { id: 1, name: 'Felix' },
+    { id: 2, name: 'Emilia' },
+    { id: 2, name: 'Messi' },
+  ];
 
   create(createUserDto: CreateUserDto): User {
     const newUsers = { id: Date.now(), ...createUserDto };
@@ -13,7 +18,10 @@ export class UsersService {
     return newUsers;
   }
 
-  findAll(): User[] {
+  findAll(name?: string): User[] {
+    if (name) {
+      return this.users.filter((user) => user.name === name);
+    }
     return this.users;
   }
 
