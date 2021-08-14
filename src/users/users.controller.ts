@@ -14,6 +14,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import {
+  ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -27,6 +28,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @ApiCreatedResponse({ type: User })
+  @ApiBadRequestResponse()
   @Post()
   create(@Body() createUserDto: CreateUserDto): User {
     return this.usersService.create(createUserDto);
@@ -46,6 +48,8 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  @ApiBadRequestResponse()
+  @ApiNotFoundResponse()
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
