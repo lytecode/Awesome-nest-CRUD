@@ -36,7 +36,7 @@ export class UsersController {
   @Get()
   @ApiOkResponse({ type: User, isArray: true })
   @ApiQuery({ name: 'name', required: false })
-  findAll(@Query('name') name: string): User[] {
+  findAll(@Query('name') name: string) {
     return this.usersService.findAll(name);
   }
 
@@ -55,7 +55,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number): { msg: string } {
+  remove(@Param('id') id: number) {
     return this.usersService.remove(id);
   }
 }
