@@ -5,5 +5,8 @@ export class CreateUserDto {
   @ApiProperty()
   @IsString()
   @MinLength(2)
-  name: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly email: string;
+  readonly password: string;
 }
