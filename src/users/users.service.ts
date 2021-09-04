@@ -38,15 +38,16 @@ export class UsersService {
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto): User {
+  update(id: number, updateUserDto: UpdateUserDto) {
     const user = this.users.find((user) => user.id === id);
-    if (user) {
-      const updatedUser = { ...user, ...updateUserDto };
-      this.users.splice(id, 1);
-      this.users.push(updatedUser);
-      return updatedUser;
+    if (!user) {
+      throw new NotFoundException(`User with #${id} not found`);
     }
-    throw new NotFoundException('User with id not found');
+
+    const updatedUser = { ...user, ...updateUserDto };
+    this.users.splice(id, 1);
+    this.users.push(updatedUser);
+    return updatedUser;
   }
 
   remove(id: number): { msg: string } {

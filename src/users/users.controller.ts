@@ -27,34 +27,34 @@ import {
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Post()
   @ApiCreatedResponse({ type: User })
   @ApiBadRequestResponse()
-  @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
+  @Get()
   @ApiOkResponse({ type: User, isArray: true })
   @ApiQuery({ name: 'name', required: false })
-  @Get()
   findAll(@Query('name') name: string): User[] {
     return this.usersService.findAll(name);
   }
 
+  @Get(':id')
   @ApiOkResponse({ type: User })
   @ApiNotFoundResponse()
-  @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): User {
     return this.usersService.findOne(id);
   }
 
+  @Patch(':id')
   @ApiBadRequestResponse()
   @ApiNotFoundResponse()
-  @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
-  ): User {
+  ) {
     return this.usersService.update(id, updateUserDto);
   }
 
