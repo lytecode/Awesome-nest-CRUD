@@ -6,13 +6,16 @@ import { User } from './entities/user.entity';
 @Injectable()
 export class UsersService {
   private users: User[] = [
-    { id: 0, name: 'June' },
-    { id: 1, name: 'Felix' },
-    { id: 2, name: 'Emilia' },
-    { id: 2, name: 'Messi' },
+    {
+      id: 0,
+      firstName: 'June',
+      lastName: 'Fletcher',
+      email: 'jfletcher@gmail.com',
+      password: '123',
+    },
   ];
 
-  create(createUserDto: CreateUserDto): User {
+  create(createUserDto: CreateUserDto) {
     const newUsers = { id: Date.now(), ...createUserDto };
     this.users.push(newUsers);
     return newUsers;
@@ -20,7 +23,7 @@ export class UsersService {
 
   findAll(name?: string): User[] {
     if (name) {
-      return this.users.filter((user) => user.name === name);
+      return this.users.filter((user) => user.firstName === name);
     }
     return this.users;
   }
