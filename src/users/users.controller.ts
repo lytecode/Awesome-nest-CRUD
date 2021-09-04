@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   Query,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -44,22 +43,19 @@ export class UsersController {
   @Get(':id')
   @ApiOkResponse({ type: User })
   @ApiNotFoundResponse()
-  findOne(@Param('id', ParseIntPipe) id: number): User {
-    return this.usersService.findOne(id);
+  findOne(@Param('id') id: number) {
+    return this.usersService.findOne(+id);
   }
 
   @Patch(':id')
   @ApiBadRequestResponse()
   @ApiNotFoundResponse()
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
+  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): { msg: string } {
+  remove(@Param('id') id: number): { msg: string } {
     return this.usersService.remove(id);
   }
 }
